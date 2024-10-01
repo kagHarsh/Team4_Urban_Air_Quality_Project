@@ -69,3 +69,5 @@ In this task, we develop a web application using Flask to provide real-time heal
 - **Load the Trained Model**: The trained model from Task 1 is loaded using `joblib` or `pickle` to make predictions based on user input.
 
 #### Key Flask Routes:
+- `/` : Home route displaying the input form (renders `home.html`).
+- `/predict` : Route to handle form submissions, pass input data to the trained model, and return the health risk score.
