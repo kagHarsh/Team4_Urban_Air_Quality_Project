@@ -47,3 +47,24 @@ This task focuses on loading, cleaning, visualizing, and analyzing the urban air
 #### Example Python File:
 ```bash
 - main.py  # Script for data cleaning, visualization, and model training.
+
+## Task 2: Web Application with Flask
+
+In this task, we develop a web application using Flask to provide real-time health risk predictions based on user input. Users will be able to input air quality data via a web form, and the trained machine learning model will predict the health risk score, which will be displayed on the web page.
+
+---
+
+### Web Application Features:
+- **User Input**: The web application accepts user inputs for air quality parameters.
+- **Model Prediction**: Based on the input values, the model trained in Task 1 predicts the health risk score.
+- **Web Form**: The frontend provides a simple form for users to input required parameters.
+- **Flask Backend**: The Flask framework handles requests, invokes the machine learning model, and returns the prediction results to the user.
+
+### Steps to Build the Web Application:
+
+#### 1. Create the Flask Application (`app.py`):
+
+- **Flask Framework**: We use Flask to set up the backend that will handle user requests and predict health risk scores using the trained machine learning model.
+- **Load the Trained Model**: The trained model from Task 1 is loaded using `joblib` or `pickle` to make predictions based on user input.
+
+#### Key Flask Routes:
