@@ -47,6 +47,7 @@ This task focuses on loading, cleaning, visualizing, and analyzing the urban air
 #### Example Python File:
 ```bash
 - main.py  # Script for data cleaning, visualization, and model training.
+```
 
 ## Task 2: Web Application with Flask
 
