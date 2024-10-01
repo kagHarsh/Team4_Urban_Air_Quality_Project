@@ -71,3 +71,57 @@ In this task, we develop a web application using Flask to provide real-time heal
 #### Key Flask Routes:
 - `/` : Home route displaying the input form (renders `home.html`).
 - `/predict` : Route to handle form submissions, pass input data to the trained model, and return the health risk score.
+  
+
+## Task 3: Jenkins Pipeline and Docker for CI/CD
+
+In this task, we automate the deployment of our machine learning-based urban air quality project using Jenkins and Docker. The Jenkins pipeline is used for Continuous Integration (CI), while Docker is used to containerize the application and ensure that it runs consistently across different environments.
+
+---
+
+### CI/CD Pipeline Overview:
+- **Jenkins Pipeline**: We use Jenkins to automate the building, testing, and deployment processes.
+- **Docker**: Docker is used to containerize the application, ensuring that it runs in a consistent environment, regardless of where it is deployed.
+
+---
+
+### Steps to Set Up Jenkins Pipeline with Docker:
+
+#### 1. Write a `Dockerfile`:
+The `Dockerfile` is used to create a Docker image that contains all the necessary dependencies, including the trained model and Flask application.
+
+#### 2. Jenkins Pipeline Script (Jenkinsfile)
+
+The `Jenkinsfile` defines the stages of the pipeline. It pulls the latest code from the GitHub repository, builds a Docker image, and runs the application inside the container.
+
+Example `Jenkinsfile`:
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/kagHarsh/demo-urban'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build('urban_pandas-image', '-f Dockerfile .')
+                }
+            }
+        }
+        stage('Run Python Script in Docker') {
+            steps {
+                script {
+                    docker.image('urban_pandas-image').inside(
+                        "-v /c/ProgramData/Jenkins/.jenkins/workspace/urban_pd:/workspace " + // Use Unix-style path
+                        "-w /workspace") { // Ensure this is a valid absolute path inside the container
+                        bat 'python urban_with_pandas.py'
+                    }
+                }
+            }
+        }
+    }
+}
