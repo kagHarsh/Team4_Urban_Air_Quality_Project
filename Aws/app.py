@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-import mysql.connector  # Use mysql.connector for MySQL operations
+import mysql.connector  
 import pickle
 import numpy as np
 
@@ -13,7 +13,7 @@ connection = mysql.connector.connect(
     database='exldemo'
 )
 
-# Load the model and scaler (uncomment if you need this functionality)
+
 model = pickle.load(open('model/regmodel.pkl', 'rb'))
 scaler = pickle.load(open('model/scaling.pkl', 'rb'))
 
@@ -34,9 +34,9 @@ def model_prediction():
 def predict():
     try:
         data = [float(x) for x in request.form.values()]
-        scaled_data = scaler.transform(np.array(data).reshape(1, -1))  # Uncomment if needed
-        output = model.predict(scaled_data)[0]  # Uncomment if needed
-        #output = "Prediction logic not implemented"  # Placeholder
+        scaled_data = scaler.transform(np.array(data).reshape(1, -1))  
+        output = model.predict(scaled_data)[0]  
+        
         if output < 4:
             comment = "Comment: Healthy"
         elif 4 <= output < 8:
@@ -47,23 +47,23 @@ def predict():
     except Exception as e:
         return render_template('predict.html', prediction_text=f"Error: {str(e)}")
 
-# Route for fetching max temperature
+
 @app.route('/max-temperature', methods=['GET'])
 def max_temperature():
     try:
-        # Call the stored function to get the maximum temperature
+        
         cursor = connection.cursor(dictionary=True)
         cursor.execute("SELECT City, MAX(tempmax) AS max_temperature FROM urban_air_quality_data GROUP BY City ORDER BY max_temperature DESC LIMIT 10;")
         results = cursor.fetchall()
         cursor.close()
 
-        # Check if results are empty
+        
         if not results:
             return jsonify({"error": "No data found"}), 404
 
-        return jsonify(results)  # Return the results as JSON
+        return jsonify(results) 
     except Exception as e:
-        # Log the error for debugging
+        
         print(f"Error occurred: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
@@ -146,7 +146,7 @@ def days_with_precipitation(city):
     return jsonify(result)
 
 
-# Run the Flask app
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
 
