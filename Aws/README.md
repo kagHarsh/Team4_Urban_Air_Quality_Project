@@ -25,18 +25,21 @@ This project is a web-based application for predicting urban air quality and hea
 
 2. **Activate the Python Virtual Environment**
 Once inside the EC2 instance, navigate to the project folder (if not already there) and activate the Python virtual environment:
+   ```bash
    cd /home/ubuntu/Team_4_Project
    source myenv/bin/activate
 
-3. **Install Required Dependencies**
+4. **Install Required Dependencies**
 If it’s the first time running the project or the dependencies are not installed, install the necessary Python libraries. You can do this using pip with the requirements.txt file (if available):
+   ```bash
    pip install -r requirements.txt
 
-4. **Run the Application**
+6. **Run the Application**
 After activating the environment and installing the dependencies, run the Flask app:
+   ```bash
    python3 app.py
 
-5. **Access the Application**
+8. **Access the Application**
 Once the app is running, you can access it by entering the following in your browser:
    http://13.51.37.85:5000
    
