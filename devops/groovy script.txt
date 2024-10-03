@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/kagHarsh/demo-urban'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build('urban_pandas-image', '-f Dockerfile .')
+                }
+            }
+        }
+        stage('Run Python Script in Docker') {
+            steps {
+                script {
+                    docker.image('urban_pandas-image').inside(
+                        "-v /c/ProgramData/Jenkins/.jenkins/workspace/urban_pd:/workspace " + // Use Unix-style path
+                        "-w /workspace") { // Ensure this is a valid absolute path inside the container
+                        bat 'python urban_with_pandas.py'
+                    }
+                }
+            }
+        }
+    }
+}
