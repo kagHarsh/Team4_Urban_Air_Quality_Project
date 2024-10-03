@@ -1,0 +1,99 @@
+  <!DOCTYPE html>
+  <html lang="en">
+	  <head>
+		      <meta charset="UTF-8">
+		          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+			      <title>Team 4 Data Analysis</title>
+			          <style>
+        body {
+		            font-family: Arial, sans-serif;
+			                margin: 20px;
+					        }
+	        table {
+			            width: 100%;
+				                border-collapse: collapse;
+						            margin-top: 20px;
+							            }
+		        th, td {
+				            border: 1px solid #ddd;
+					                padding: 8px;
+							            text-align: left;
+								            }
+			        th {
+					            background-color: #f2f2f2;
+						            }
+				        button {
+						            padding: 10px 15px;
+							                margin-bottom: 20px;
+									            cursor: pointer;
+										            }
+					    </style>
+	  </head>
+	  <body>
+
+		      <h1>Data Analysis Dashboard</h1>
+		          
+		          <button id="fetchMaxTempBtn">Get Max Temperature Cities</button>
+			      <button id="fetchMinTempBtn">Get Min Temperature Cities</button>
+			          <button id="fetchAvgHumidityBtn">Get Average Humidity by City</button>
+				      <button id="fetchHighestHealthRiskBtn">Get Cities with Highest Health Risk</button>
+				          <button id="fetchMaxWindSpeedBtn">Get Max Wind Speed by City</button>
+					     
+					          
+					        
+
+						      <table id="resultTable">
+							              <thead>
+									                  <tr>
+												                  <th>City</th>
+														                  <th>Data</th>
+																              </tr>
+																	              </thead>
+																		              <tbody>
+																				                  <!-- Data will be populated here -->
+																						          </tbody>
+																							      </table>
+
+																							          <script>
+																									          const tableBody = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
+
+																										          function fetchData(url) {
+																												              fetch(url)
+																												              .then(response => response.json())
+																												              .then(data => {
+																														                      tableBody.innerHTML = ''; // Clear previous results
+																														                      data.forEach(row => {
+																																	                          const newRow = tableBody.insertRow();
+																																	                          Object.values(row).forEach(text => {
+																																					                          const cell = newRow.insertCell();
+																																					                          cell.textContent = text;
+																																					                      });
+																																	                      });
+																														                  })
+																												              .catch(error => console.error('Error fetching data:', error));
+																												          }
+
+																										          document.getElementById('fetchMaxTempBtn').addEventListener('click', () => {
+																												              fetchData('http://13.51.37.85:5000/max-temperature');
+																												          });
+
+																										          document.getElementById('fetchMinTempBtn').addEventListener('click', () => {
+																												              fetchData('http://13.51.37.85:5000/min-temperature');
+																												          });
+
+																										          document.getElementById('fetchAvgHumidityBtn').addEventListener('click', () => {
+																												              fetchData('http://13.51.37.85:5000/avg-humidity');
+																												          });
+
+																										          document.getElementById('fetchHighestHealthRiskBtn').addEventListener('click', () => {
+																												              fetchData('http://13.51.37.85:5000/highest-health-risk');
+																												          });
+
+																										          document.getElementById('fetchMaxWindSpeedBtn').addEventListener('click', () => {
+																												              fetchData('http://13.51.37.85:5000/max-wind-speed');
+																												      													          });
+																							      </script>
+
+	  </body>
+  </html>
+
